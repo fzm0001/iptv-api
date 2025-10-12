@@ -2,9 +2,12 @@ name: 'Update schedule'
 
 on:
   schedule:
-    - cron: '0 22,10 * * *'
+    - cron: '0 10 */3 * *'
+    # 10:00 触发一次
+    # cron 格式：分 时 日 月 周
+    # 第三个是 */2，这里需要解释一下，/n 表示每隔 n 天，所以这里是每隔 2 天。
   workflow_dispatch:
-    branches:
+    分支:
       - master
       - dev
       - gd
@@ -54,7 +57,7 @@ jobs:
       - name: Install selenium
         if: env.OPEN_DRIVER == 'True'
         run: pipenv install selenium
-      - name: Update
+      - name: 更新
         run: pipenv run dev
       - name: Commit and push if changed
         run: |
